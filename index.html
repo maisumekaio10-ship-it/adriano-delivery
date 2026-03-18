@@ -16,7 +16,7 @@
             --shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
             margin: 0;
@@ -28,7 +28,7 @@
             min-height: 100vh;
         }
 
-        .container { padding: 20px 16px 120px; max-width: 500px; margin: 0 auto; display: block !important; }
+        .container { padding: 20px 16px 120px; max-width: 500px; margin: 0 auto; min-height: 400px; }
 
         header {
             position: sticky; top: 0; z-index: 1000;
@@ -177,7 +177,7 @@
 <div class="toast" id="toast">Item adicionado!</div>
 
 <script>
-// --- LÓGICA MANTIDA ---
+// --- CONFIGURAÇÕES E DADOS ---
 const TAXA = 7;
 let cart = [];
 let viewStack = [];
@@ -214,13 +214,21 @@ const produtos={
     ]
 };
 
+// --- FUNÇÕES DE NAVEGAÇÃO E UI ---
 function avisoPix(){ return `<div class="aviso">Pagamentos via <b>Pix</b> exigem envio do comprovante.</div>`; }
 
-function navigate(fn){ viewStack.push(fn); history.pushState({},""); fn(); }
+function navigate(fn){ 
+    viewStack.push(fn); 
+    history.pushState({}, ""); 
+    fn(); 
+}
 
-window.addEventListener("popstate",function(){
-    if(viewStack.length>1){ viewStack.pop(); viewStack[viewStack.length-1](); }
-});
+window.onpopstate = function() {
+    if(viewStack.length > 1){ 
+        viewStack.pop(); 
+        viewStack[viewStack.length-1](); 
+    }
+};
 
 function renderHome(){
     let html=avisoPix()+"<h3>Categorias</h3>";
@@ -268,7 +276,8 @@ function updateCart(){
 
 function toast(){
     let t=document.getElementById("toast");
-    t.style.display="block"; setTimeout(()=>t.style.display="none",1500);
+    t.style.display="block"; 
+    setTimeout(()=>t.style.display="none",1500);
 } 
 
 function goCart(){ navigate(renderCart); } 
@@ -364,8 +373,8 @@ function finalizar(){
     window.open(`https://wa.me/5511952282056?text=${msg}`);
 }
 
-// INICIALIZAÇÃO SEGURA
-window.addEventListener('load', () => {
+// INICIALIZAÇÃO CORRIGIDA (DOM READY)
+document.addEventListener("DOMContentLoaded", function() {
     renderHome();
     viewStack = [renderHome];
 });

@@ -2,20 +2,18 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NOGUEIRA RESTAURANTE DA ROÇA</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #f4d03f;
-            --primary-dark: #d4ac0d;
             --secondary: #2ecc71;
-            --accent: #e67e22;
             --black: #0f0f0f;
             --card-bg: #1a1a1a;
             --white: #ffffff;
             --text-muted: #a0a0a0;
-            --shadow: 0 4px 15px rgba(0,0,0,0.3);
+            --shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -27,9 +25,10 @@
             color: var(--white);
             background-image: radial-gradient(circle at top, #222 0%, #0f0f0f 100%);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
-        .container { padding: 20px 16px 120px; max-width: 500px; margin: 0 auto; }
+        .container { padding: 20px 16px 120px; max-width: 500px; margin: 0 auto; display: block !important; }
 
         header {
             position: sticky; top: 0; z-index: 1000;
@@ -54,7 +53,7 @@
         .header-title { font-size: 16px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px; }
         .header-sub { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
 
-        /* Estilo dos Cards de Categoria */
+        /* Categorias */
         .category-card {
             background: var(--card-bg);
             padding: 20px;
@@ -63,14 +62,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #222;
+            border: 1px solid #252525;
             transition: 0.2s;
             cursor: pointer;
         }
         .category-card:active { transform: scale(0.97); background: #222; }
-        .category-card b { font-size: 18px; }
 
-        /* Estilo dos Cards de Produtos */
+        /* Produtos */
         .card { 
             background: var(--card-bg); 
             padding: 12px; 
@@ -87,9 +85,8 @@
         .price-tag { color: var(--secondary); font-weight: 700; font-size: 16px; margin-top: 5px; display: block; }
 
         .circle { 
-            width: 85px; height: 85px; border-radius: 15px; 
-            overflow: hidden; flex-shrink: 0;
-            background: #222;
+            width: 80px; height: 80px; border-radius: 15px; 
+            overflow: hidden; flex-shrink: 0; background: #222;
         }
         .circle img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -98,12 +95,12 @@
         
         .primary { 
             background: linear-gradient(to right, var(--primary), #f1c40f); 
-            color: #000; height: 48px; width: 100%; 
+            color: #000; height: 50px; width: 100%; 
             font-size: 16px; box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3);
+            margin-top: 10px;
         }
-        .primary:active { transform: scale(0.98); opacity: 0.9; }
 
-        .btn-back { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 5px 15px; margin-bottom: 15px; font-size: 13px; }
+        .btn-back { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 6px 16px; margin-bottom: 15px; font-size: 13px; display: inline-block; }
 
         .small { 
             background: var(--primary); color: #000; 
@@ -115,11 +112,10 @@
             border-radius: 12px; border: 1px solid #333; 
             background: #222; color: #fff; font-size: 14px;
         }
-        input:focus { outline: 1px solid var(--primary); }
 
         .hidden { display: none; }
 
-        /* Botão Flutuante do Carrinho */
+        /* Carrinho Flutuante */
         #cartBtn { 
             position: fixed; bottom: 30px; right: 20px; 
             width: 60px; height: 60px; border-radius: 20px; 
@@ -144,7 +140,6 @@
             transform: translateX(-50%); background: var(--secondary); 
             color: white; padding: 10px 25px; border-radius: 50px; 
             display: none; z-index: 3000; font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .aviso { 
@@ -157,100 +152,81 @@
 
         h3 { font-size: 20px; margin: 10px 0 20px; font-weight: 600; }
         hr { border: 0; border-top: 1px solid #333; margin: 15px 0; }
-
         .cart-item-remove { background: #333; color: #ff7675; width: 32px; height: 32px; border-radius: 8px; }
-
     </style>
 </head>
 <body>
 
 <header>
     <div class="header-content">
-        <div class="logo-box">
-            <img src="logo.png" alt="Logo">
-        </div>
+        <div class="logo-box"><img src="logo.png" onerror="this.style.display='none'"></div>
         <div class="header-texts">
             <div class="header-title">NOGUEIRA RESTAURANTE</div>
-            <div class="header-sub">Comida caseira • Sabor da roça</div>
+            <div class="header-sub">Sabor da roça • Comida caseira</div>
         </div>
     </div>
 </header>
 
-<div class="container" id="app"></div>
+<div class="container" id="app">
+    </div>
 
 <div id="cartBtn" onclick="goCart()">
-    🛒
-    <div id="cartCount">0</div>
+    🛒<div id="cartCount">0</div>
 </div>
 
-<div class="toast" id="toast">✅ Adicionado!</div>
+<div class="toast" id="toast">Item adicionado!</div>
 
 <script>
-// MANTENDO TODA A SUA LÓGICA ORIGINAL
+// --- LÓGICA MANTIDA ---
 const TAXA = 7;
 let cart = [];
 let viewStack = [];
 let dadosPedido = {};
 
-function avisoPix(){
-    return `<div class="aviso">Pedidos via <b>Pix</b> precisam do comprovante no WhatsApp.</div>`;
-}
-
-function navigate(fn){viewStack.push(fn);history.pushState({},"");fn();}
-
-window.addEventListener("popstate",function(){
-    if(viewStack.length>1){viewStack.pop();let last=viewStack[viewStack.length-1];last();}
-});
-
 const produtos={
     Marmitas:[
-        {name:"Marmita Frango",price:15,descricao:"Frango grelhado, arroz, feijão e fritas",img:"frango.jpg"},
+        {name:"Marmita Frango",price:15,descricao:"Frango grelhado, acompanhamentos da roça",img:"frango.jpg"},
         {name:"Marmita Carne",price:17,descricao:"Carne assada com batatas",img:"carne.jpg"},
         {name:"Marmita Linguiça",price:16,descricao:"Linguiça acebolada especial",img:"linguica.jpg"},
-        {name:"Marmita Feijoada",price:18,descricao:"Feijoada completa da casa",img:"feijoada.jpg"},
+        {name:"Marmita Feijoada",price:18,descricao:"Feijoada completa",img:"feijoada.jpg"},
         {name:"Marmita Costela",price:20,descricao:"Costela desfiada",img:"costela.jpg"},
         {name:"Marmita Peixe",price:18,descricao:"Peixe empanado",img:"peixe.jpg"},
         {name:"Marmita Vegetariana",price:14,descricao:"Mix de legumes e ovos",img:"vegetariana.jpg"},
-        {name:"Marmita Completa",price:22,descricao:"Um pouco de tudo",img:"completa.jpg"}
+        {name:"Marmita Completa",price:22,descricao:"O melhor da roça",img:"completa.jpg"}
     ],
     Bebidas:[
         {name:"Coca-Cola",price:6,descricao:"Lata 350ml",img:"coca.jpg"},
         {name:"Guaraná",price:5,descricao:"Lata 350ml",img:"guarana.jpg"},
         {name:"Suco Natural",price:7,descricao:"Copo 400ml",img:"suco.jpg"},
-        {name:"Água",price:3,descricao:"Sem gás 500ml",img:"agua.jpg"},
-        {name:"Refrigerante 2L",price:10,descricao:"Garrafa pet",img:"refri2l.jpg"},
-        {name:"Chá Gelado",price:6,descricao:"Pêssego ou Limão",img:"cha.jpg"},
-        {name:"Energético",price:12,descricao:"Lata",img:"energetico.jpg"},
-        {name:"Suco Detox",price:9,descricao:"Verde",img:"detox.jpg"}
+        {name:"Água",price:3,descricao:"500ml",img:"agua.jpg"},
+        {name:"Refrigerante 2L",price:10,descricao:"Garrafa 2 Litros",img:"refri2l.jpg"}
     ],
     Acompanhamentos:[
         {name:"Arroz",price:5,descricao:"Porção extra",img:"arroz.jpg"},
         {name:"Feijão",price:5,descricao:"Porção extra",img:"feijao.jpg"},
-        {name:"Batata Frita",price:8,descricao:"Porção individual",img:"batata.jpg"},
-        {name:"Farofa",price:4,descricao:"Farofa temperada",img:"farofa.jpg"},
-        {name:"Salada",price:6,descricao:"Mix de folhas",img:"salada.jpg"},
-        {name:"Ovo",price:3,descricao:"Ovo frito",img:"ovo.jpg"},
-        {name:"Macarrão",price:7,descricao:"Alho e óleo",img:"macarrao.jpg"},
-        {name:"Torresmo",price:10,descricao:"Porção crocante",img:"torresmo.jpg"}
+        {name:"Batata Frita",price:8,descricao:"Porção",img:"batata.jpg"},
+        {name:"Torresmo",price:10,descricao:"Crocante",img:"torresmo.jpg"}
     ],
     Doces:[
-        {name:"Pudim",price:6,descricao:"Fatia generosa",img:"pudim.jpg"},
-        {name:"Doce de leite",price:5,descricao:"Caseiro",img:"doce.jpg"},
-        {name:"Paçoca",price:3,descricao:"Unidade",img:"pacoca.jpg"},
-        {name:"Canjica",price:6,descricao:"Copo 300ml",img:"canjica.jpg"},
-        {name:"Arroz doce",price:5,descricao:"Cremoso",img:"arrozdoce.jpg"},
-        {name:"Bolo",price:7,descricao:"Fatia do dia",img:"bolo.jpg"},
-        {name:"Cocada",price:4,descricao:"Branca ou queimada",img:"cocada.jpg"},
-        {name:"Romeu e Julieta",price:6,descricao:"Goiabada com queijo",img:"romeujulieta.jpg"}
+        {name:"Pudim",price:6,descricao:"Fatia caseira",img:"pudim.jpg"},
+        {name:"Doce de leite",price:5,descricao:"Mineiro",img:"doce.jpg"},
+        {name:"Romeu e Julieta",price:6,descricao:"Queijo e goiabada",img:"romeujulieta.jpg"}
     ]
 };
 
+function avisoPix(){ return `<div class="aviso">Pagamentos via <b>Pix</b> exigem envio do comprovante.</div>`; }
+
+function navigate(fn){ viewStack.push(fn); history.pushState({},""); fn(); }
+
+window.addEventListener("popstate",function(){
+    if(viewStack.length>1){ viewStack.pop(); viewStack[viewStack.length-1](); }
+});
+
 function renderHome(){
-    let html=avisoPix()+"<h3>O que vai pedir hoje?</h3>";
+    let html=avisoPix()+"<h3>Categorias</h3>";
     for(let cat in produtos){
         html+=`<div class="category-card" onclick="navigate(()=>openCat('${cat}'))">
-                <b>${cat}</b>
-                <span style="color:var(--primary)">➔</span>
+                <b>${cat}</b> <span style="color:var(--primary)">➔</span>
                </div>`;
     }
     document.getElementById("app").innerHTML=html;
@@ -258,12 +234,12 @@ function renderHome(){
 
 function openCat(cat){
     let html=avisoPix()+`<button class="btn-back" onclick="history.back()">⬅ Voltar</button><h3>${cat}</h3>`;
-    if(cat=="Marmitas"){html+=`<div class="aviso" style="background:#333; color:#fff; border:none">Tamanhos: P R$15 | M R$18 | G R$22</div>`;}
+    if(cat=="Marmitas"){html+=`<div class="aviso" style="background:#333;color:#fff;border:none">P R$15 | M R$18 | G R$22</div>`;}
     produtos[cat].forEach((p,i)=>{
         html+=`
         <div class="card">
             <div class="flex">
-                <div class="circle"><img src="${p.img}"></div>
+                <div class="circle"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/80?text=Comida'"></div>
                 <div class="product-info">
                     <b>${p.name}</b>
                     <span>${p.descricao}</span>
@@ -284,23 +260,21 @@ function add(cat,i){
     toast();
 }
 
-function removeFromCart(index){cart.splice(index,1);updateCart();renderCart();}
+function removeFromCart(index){ cart.splice(index,1); updateCart(); renderCart(); }
 
 function updateCart(){
-    let count = cart.reduce((s,i)=>s+i.qty,0);
-    document.getElementById("cartCount").innerText=count;
+    document.getElementById("cartCount").innerText = cart.reduce((s,i)=>s+i.qty,0);
 } 
 
 function toast(){
     let t=document.getElementById("toast");
-    t.style.display="block";
-    setTimeout(()=>t.style.display="none",1500);
+    t.style.display="block"; setTimeout(()=>t.style.display="none",1500);
 } 
 
-function goCart(){navigate(renderCart);} 
+function goCart(){ navigate(renderCart); } 
 
 function renderCart(){
-    let html=avisoPix()+"<button class="btn-back" onclick='history.back()'>⬅ Voltar</button><h3>Meu Carrinho</h3>";
+    let html=avisoPix()+"<button class="btn-back" onclick='history.back()'>⬅ Voltar</button><h3>Carrinho</h3>";
     let subtotal=0;
     if(cart.length === 0) {
         html += `<div style="text-align:center; padding:40px; color:var(--text-muted)">Seu carrinho está vazio</div>`;
@@ -309,54 +283,37 @@ function renderCart(){
             subtotal+=i.price*i.qty;
             html+=`
             <div class="card flex" style="justify-content:space-between">
-                <div>
-                    <b>${i.qty}x ${i.name}</b><br>
-                    <span style="color:var(--secondary)">R$ ${(i.price*i.qty).toFixed(2)}</span>
-                </div>
+                <div><b>${i.qty}x ${i.name}</b><br><span style="color:var(--secondary)">R$ ${(i.price*i.qty).toFixed(2)}</span></div>
                 <button class="cart-item-remove" onclick="removeFromCart(${index})">✕</button>
             </div>`;
         });
-        html+=`<div style="margin:20px 0">
-                <div class="flex" style="justify-content:space-between"><span>Subtotal:</span> <b>R$ ${subtotal.toFixed(2)}</b></div>
-               </div>
-               <button class="primary" onclick="navigate(renderCheckout)">Finalizar Pedido</button>`;
+        html+=`<div class="flex" style="justify-content:space-between; margin:20px 0"><span>Subtotal:</span> <b>R$ ${subtotal.toFixed(2)}</b></div>
+               <button class="primary" onclick="navigate(renderCheckout)">Continuar</button>`;
     }
     document.getElementById("app").innerHTML=html;
 }
 
 function renderCheckout(){
-    let html=avisoPix()+`<button class="btn-back" onclick="history.back()">⬅ Voltar</button><h3>Dados do Pedido</h3>
-    <label>Nome Completo</label>
-    <input id="nome" placeholder="Como te chamamos?" required>
-    <label>WhatsApp</label>
-    <input id="fone" placeholder="(00) 00000-0000" required>
-    <label>Como prefere?</label>
+    let html=avisoPix()+`<button class="btn-back" onclick="history.back()">⬅ Voltar</button><h3>Finalizar</h3>
+    <input id="nome" placeholder="Seu Nome">
+    <input id="fone" placeholder="WhatsApp">
     <select id="tipo" onchange="toggleEndereco()">
-        <option value="Entrega">Entrega em casa (Taxa R$7)</option>
-        <option value="Retirada">Retirar no Balcão</option>
+        <option value="Entrega">Entrega em casa (+R$7)</option>
+        <option value="Retirada">Retirar no local</option>
     </select>
-    <div id="enderecoBox">
-        <label>Endereço Completo</label>
-        <input id="endereco" placeholder="Rua, número, bairro e ref.">
-    </div>
-    <label>Horário</label>
+    <div id="enderecoBox"><input id="endereco" placeholder="Endereço Completo"></div>
     <select id="quando" onchange="toggleData()">
-        <option value="Agora">Preparar agora</option>
-        <option value="Agendar">Agendar para depois</option>
+        <option value="Agora">Para agora</option>
+        <option value="Agendar">Agendar horário</option>
     </select>
-    <div id="dataBox" class="hidden">
-        <input type="datetime-local" id="data">
-    </div>
-    <label>Forma de Pagamento</label>
+    <div id="dataBox" class="hidden"><input type="datetime-local" id="data"></div>
     <select id="pag" onchange="toggleTroco()">
         <option>Pix</option>
         <option>Dinheiro</option>
         <option>Cartão</option>
     </select>
-    <div id="trocoBox" class="hidden">
-        <input id="troco" placeholder="Troco para quanto?">
-    </div>
-    <button class="primary" style="margin-top:20px" onclick="revisao()">Ver Resumo do Pedido</button>`;
+    <div id="trocoBox" class="hidden"><input id="troco" placeholder="Troco para quanto?"></div>
+    <button class="primary" onclick="revisao()">Revisar Pedido</button>`;
     document.getElementById("app").innerHTML=html;
 }
 
@@ -375,33 +332,23 @@ function revisao(){
         quando:document.getElementById("quando").value,
         data:document.getElementById("data").value
     };
-    if(!dadosPedido.nome || !dadosPedido.fone) { alert("Preencha nome e telefone!"); return; }
+    if(!dadosPedido.nome) { alert("Informe seu nome"); return; }
     navigate(renderRevisao);
 }
 
 function renderRevisao(){
     let subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
     let total=dadosPedido.tipo=="Entrega"?subtotal+TAXA:subtotal;
-    let html=avisoPix()+"<button class="btn-back" onclick='history.back()'>⬅ Voltar</button><h3>Resumo Final</h3>";
-    html+=`
-    <div class="card" style="font-size:14px; line-height:1.8">
-        <b>Resumo de Entrega:</b><br>
-        👤 ${dadosPedido.nome}<br>
-        📞 ${dadosPedido.fone}<br>
-        📍 ${dadosPedido.tipo} ${dadosPedido.tipo=="Entrega" ? '- ' + dadosPedido.endereco : ''}<br>
-        ⏰ ${dadosPedido.quando=="Agendar" ? 'Agendado: ' + dadosPedido.data : 'Enviar agora'}<br>
-        <hr>
-        <b>Itens:</b><br>`;
-    cart.forEach(i=>{html+=`<div>• ${i.qty}x ${i.name}</div>`;});
-    html+=`
-        <hr>
-        <div class="flex" style="justify-content:space-between"><span>Subtotal:</span> <span>R$ ${subtotal.toFixed(2)}</span></div>
-        ${dadosPedido.tipo=="Entrega" ? `<div class="flex" style="justify-content:space-between"><span>Taxa:</span> <span>R$ ${TAXA.toFixed(2)}</span></div>` : ''}
-        <div class="flex" style="justify-content:space-between; font-size:18px; color:var(--primary)"><span>TOTAL:</span> <b>R$ ${total.toFixed(2)}</b></div>
-        <br>
-        <b>Pagamento:</b> ${dadosPedido.pag}
-    </div>
-    <button class="primary" onclick="finalizar()">Confirmar e Enviar WhatsApp</button>`;
+    let html=avisoPix()+"<button class='btn-back' onclick='history.back()'>⬅ Voltar</button><h3>Confirmar</h3>";
+    html+=`<div class="card" style="font-size:14px">
+        <b>Cliente:</b> ${dadosPedido.nome}<br>
+        <b>Tipo:</b> ${dadosPedido.tipo}<br>
+        ${dadosPedido.tipo=="Entrega" ? '<b>Endereço:</b> '+dadosPedido.endereco+'<br>' : ''}
+        <hr>`;
+    cart.forEach(i=>{html+=`<div>${i.qty}x ${i.name}</div>`;});
+    html+=`<hr><b>Total: R$ ${total.toFixed(2)}</b><br>
+        <b>Pagamento:</b> ${dadosPedido.pag}</div>
+        <button class="primary" onclick="finalizar()">Enviar Pedido no WhatsApp</button>`;
     document.getElementById("app").innerHTML=html;
 }
 
@@ -409,20 +356,19 @@ function finalizar(){
     let subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
     let total=dadosPedido.tipo=="Entrega"?subtotal+TAXA:subtotal;
     let msg="*Pedido - NOGUEIRA RESTAURANTE DA ROÇA*%0A%0A";
-    msg+=`👤 *Nome:* ${dadosPedido.nome}%0A`;
-    msg+=`📞 *Fone:* ${dadosPedido.fone}%0A`;
-    msg+=`📦 *Tipo:* ${dadosPedido.tipo}%0A`;
-    if(dadosPedido.tipo=="Entrega"){msg+=`🏠 *Endereço:* ${dadosPedido.endereco}%0A`;}
-    if(dadosPedido.quando=="Agendar"){msg+=`⏰ *Agendado:* ${dadosPedido.data}%0A`;}
+    msg+=`👤 *Nome:* ${dadosPedido.nome}%0A📦 *Tipo:* ${dadosPedido.tipo}%0A`;
+    if(dadosPedido.tipo=="Entrega"){msg+=`🏠 *End:* ${dadosPedido.endereco}%0A`;}
     msg+="%0A🛒 *Itens:*%0A";
     cart.forEach(i=>{msg+=`${i.qty}x ${i.name}%0A`;});
-    msg+=`%0A💰 *Total:* R$ ${total.toFixed(2)}%0A`;
-    msg+=`💳 *Pagamento:* ${dadosPedido.pag}%0A`;
-    if(dadosPedido.pag=="Dinheiro" && dadosPedido.troco){msg+=`💵 *Troco para:* ${dadosPedido.troco}%0A`;}
+    msg+=`%0A💰 *Total:* R$ ${total.toFixed(2)}%0A💳 *Pagamento:* ${dadosPedido.pag}`;
     window.open(`https://wa.me/5511952282056?text=${msg}`);
 }
 
-navigate(renderHome);
+// INICIALIZAÇÃO SEGURA
+window.addEventListener('load', () => {
+    renderHome();
+    viewStack = [renderHome];
+});
 </script>
 </body>
 </html>

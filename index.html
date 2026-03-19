@@ -2,7 +2,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOGUEIRA RESTAURANTE DA ROÇA</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+<title>NOGUEIRA RESTAURANTE DA ROÇA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
 :root{
 --primary:#f4d03f;
 --primary-dark:#d4ac0d;
@@ -12,22 +16,25 @@
 --background:#000;
 }
 
-*{box-sizing:border-box;}
+*{box-sizing:border-box;transition:all .2s ease;}
 
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:var(--background);
+background:#080808;
 color:var(--white);
-background-image:url('https://www.transparenttextures.com/patterns/food.png');
+background-image:
+radial-gradient(circle at top,#1a1a1a 0%,#080808 100%),
+url('https://www.transparenttextures.com/patterns/food.png');
 }
 
 .container{padding:20px 16px 100px;max-width:600px;margin:0 auto;}
 
 header{
 position:sticky;top:0;z-index:1000;
-background:linear-gradient(135deg,var(--primary),var(--secondary));
+background:linear-gradient(135deg,#d4af37,#2ecc71);
 padding:10px 12px;
+box-shadow:0 8px 30px rgba(0,0,0,0.6);
 }
 
 .header-content{
@@ -61,25 +68,121 @@ flex-direction:column;
 .header-title{font-size:16px;font-weight:700;line-height:1.2;}
 .header-sub{font-size:12px;}
 
-.card{background:#111;padding:16px;margin-bottom:14px;border-radius:16px;}
+.card{
+background:linear-gradient(145deg,#111,#0c0c0c);
+padding:16px;
+margin-bottom:14px;
+border-radius:20px;
+border:1px solid #1f1f1f;
+box-shadow:0 10px 30px rgba(0,0,0,0.7);
+}
+
 .flex{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.circle{width:60px;height:60px;border-radius:12px;overflow:hidden;}
+
+.circle{
+width:60px;height:60px;border-radius:14px;overflow:hidden;
+}
 .circle img{width:100%;height:100%;object-fit:cover;}
 
-button{border:none;border-radius:12px;font-family:'Poppins';font-weight:600;cursor:pointer;}
-.primary{background:var(--primary);color:#000;height:44px;width:100%;}
-.small{width:auto;height:36px;padding:0 14px;}
+button{
+border:none;
+border-radius:12px;
+font-family:'Poppins';
+font-weight:600;
+cursor:pointer;
+}
 
-input,select{width:100%;padding:12px;margin:8px 0 14px;border-radius:12px;border:none;}
+.primary{
+background:linear-gradient(135deg,#f4d03f,#f1c40f);
+color:#000;
+height:44px;
+width:100%;
+box-shadow:0 8px 20px rgba(244,208,63,0.4);
+}
+
+.small{
+width:auto;
+height:36px;
+padding:0 14px;
+background:linear-gradient(135deg,#f4d03f,#f1c40f);
+color:#000;
+font-weight:700;
+box-shadow:0 6px 15px rgba(244,208,63,0.4);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:8px 0 14px;
+border-radius:12px;
+border:none;
+}
+
 .hidden{display:none;}
 
-#cartBtn{position:fixed;bottom:24px;right:20px;width:64px;height:64px;border-radius:50%;background:var(--secondary);display:flex;justify-content:center;align-items:center;font-size:22px;}
-#cartCount{position:absolute;top:-6px;right:-6px;background:red;color:white;width:24px;height:24px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:12px;}
+#cartBtn{
+position:fixed;
+bottom:24px;
+right:20px;
+width:64px;
+height:64px;
+border-radius:50%;
+background:linear-gradient(135deg,#2ecc71,#27ae60);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:22px;
+box-shadow:0 10px 30px rgba(0,0,0,0.7);
+}
 
-.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:var(--secondary);color:black;padding:12px 22px;border-radius:30px;display:none;}
+#cartCount{
+position:absolute;
+top:-6px;
+right:-6px;
+background:#ff3b30;
+color:white;
+width:24px;
+height:24px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:12px;
+font-weight:700;
+}
 
-.aviso{background:#222;padding:10px;border-radius:10px;margin-bottom:15px;font-size:12px;border-left:4px solid var(--primary);}
-</style></head><body><header>
+.toast{
+position:fixed;
+bottom:110px;
+left:50%;
+transform:translateX(-50%);
+background:var(--secondary);
+color:black;
+padding:12px 22px;
+border-radius:30px;
+display:none;
+}
+
+.aviso{
+background:#1c1c1c;
+padding:10px;
+border-radius:12px;
+margin-bottom:15px;
+font-size:12px;
+border-left:4px solid #f4d03f;
+color:#ddd;
+}
+
+/* efeitos */
+button:active{transform:scale(.95);}
+.card:active{transform:scale(.97);}
+</style>
+
+</head>
+
+<body>
+
+<header>
 <div class="header-content">
 <div class="logo-box">
 <img src="logo.png">
@@ -89,8 +192,15 @@ input,select{width:100%;padding:12px;margin:8px 0 14px;border-radius:12px;border
 <div class="header-sub">Comida caseira • Marmitas • Sabor da roça</div>
 </div>
 </div>
-</header><div class="container" id="app"></div><div id="cartBtn" onclick="goCart()">🛒<div id="cartCount">0</div></div>
-<div class="toast" id="toast">Item adicionado</div><script>
+</header>
+
+<div class="container" id="app"></div>
+
+<div id="cartBtn" onclick="goCart()">🛒<div id="cartCount">0</div></div>
+
+<div class="toast" id="toast">Item adicionado</div>
+
+<script>
 const TAXA=7;
 let cart=[];
 let viewStack=[];
@@ -166,9 +276,9 @@ document.getElementById("app").innerHTML=html;
 
 function add(cat,i){let item=produtos[cat][i];let f=cart.find(x=>x.name==item.name);if(f){f.qty++}else{cart.push({...item,qty:1})}updateCart();toast();}
 function removeFromCart(index){cart.splice(index,1);updateCart();renderCart();}
-function updateCart(){document.getElementById("cartCount").innerText=cart.reduce((s,i)=>s+i.qty,0);} 
-function toast(){let t=document.getElementById("toast");t.style.display="block";setTimeout(()=>t.style.display="none",1500);} 
-function goCart(){navigate(renderCart);} 
+function updateCart(){document.getElementById("cartCount").innerText=cart.reduce((s,i)=>s+i.qty,0);}
+function toast(){let t=document.getElementById("toast");t.style.display="block";setTimeout(()=>t.style.display="none",1500);}
+function goCart(){navigate(renderCart);}
 
 function renderCart(){
 let html=avisoPix()+"<button onclick='history.back()'>⬅ Voltar</button><h3>Carrinho</h3>";
@@ -256,5 +366,7 @@ window.open(`https://wa.me/5511952282056?text=${msg}`);
 }
 
 navigate(renderHome);
-</script></body>
+</script>
+
+</body>
 </html>
